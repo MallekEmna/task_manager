@@ -1,0 +1,9 @@
+.leave-container {
+    opacity: 1;
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.leave-container[animating-leave] {
+    opacity: 0;
+    transform: translateY(20px);
+}
