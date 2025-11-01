@@ -1,9 +1,9 @@
 <div class="transition-all duration-300 ease-in-out space-y-6">
-  
+
   <!-- Section Tâches -->
   <div>
     <h4 class="text-lg font-semibold text-gray-700 mb-3">Tâches</h4>
-    <app-task-list [tasks]="project.tasks"></app-task-list>
+    <app-task-list (statutChange)="onStatutChange($event)" [tasks]="project.tasks"></app-task-list>
   </div>
 
   <!-- Section Progression -->
@@ -14,10 +14,8 @@
     <div class="flex items-center gap-3">
       <!-- Barre -->
       <div class="relative flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
-        <div
-          class="h-4 bg-gradient-to-r from-green-400 to-green-600 transition-all duration-500"
-          [style.width.%]="getProgressPercentage()"
-        ></div>
+        <div class="h-4 bg-gradient-to-r from-green-400 to-green-600 transition-all duration-500"
+          [style.width.%]="getProgressPercentage()"></div>
       </div>
 
       <!-- Pourcentage -->

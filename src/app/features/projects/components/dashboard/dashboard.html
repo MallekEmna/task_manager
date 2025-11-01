@@ -1,0 +1,40 @@
+<div class="p-6">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">Tableau de bord</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Carte Projets -->
+        <div class="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 text-center">
+            <p class="text-gray-500 dark:text-gray-400">Total Projets</p>
+            <h3 class="text-3xl font-bold text-blue-600">{{ totalProjects }}</h3>
+        </div>
+
+        <!-- Carte Tâches -->
+        <div class="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 text-center">
+            <p class="text-gray-500 dark:text-gray-400">Total Tâches</p>
+            <h3 class="text-3xl font-bold text-green-600">{{ totalTasks }}</h3>
+        </div>
+
+        <!-- Progression Globale -->
+        <div class="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 flex flex-col items-center justify-center">
+            <div class="relative w-24 h-24">
+                <svg class="w-24 h-24 transform -rotate-90">
+                    <circle cx="48" cy="48" r="40" stroke="gray" stroke-width="8" fill="none" class="opacity-20" />
+                    <circle cx="48" cy="48" r="40" stroke="url(#gradient)" stroke-width="8" stroke-linecap="round"
+                        stroke-dasharray="251.2" [attr.stroke-dashoffset]="251.2 - (251.2 * globalProgress / 100)"
+                        fill="none" />
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#3b82f6" />
+                            <stop offset="100%" stop-color="#06b6d4" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-lg font-bold text-gray-700 dark:text-gray-200">
+                    {{ globalProgress }}%
+                </div>
+            </div>
+            <p class="mt-3 text-gray-500 dark:text-gray-400">Progression globale</p>
+        </div>
+    </div>
+</div>

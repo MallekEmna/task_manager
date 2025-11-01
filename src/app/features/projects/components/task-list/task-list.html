@@ -1,25 +1,37 @@
 <div class="flex justify-between gap-6">
-  @if (tasks.length === 0){
+  @if (tasks.length === 0) {
   <p class="text-center text-gray-500 text-lg">Aucune tâche disponible</p>
   } @else {
-
-
   <!--  En attente -->
   <div class="flex-1 bg-yellow-50 rounded-xl shadow-md p-5">
     <h3 class="text-lg font-bold text-yellow-700 mb-4 flex items-center gap-2">
-      <lucide-icon name="clock" class="w-5 h-5"></lucide-icon>
+      <lucide-icon [name]="'En attente' | statusEmoji" class="w-5 h-5"></lucide-icon>
       En attente
     </h3>
     <div class="space-y-3">
-      @for (task of tasks; track task.title) {
+      @for (task of tasks; track task.title; let i = $index) {
       @if (task.status === 'En attente') {
       <div class="p-3 rounded-lg shadow-sm border-l-4 transition-transform hover:scale-[1.02]"
-        appHighlightStatus="{{task.status}}">
+        [appHighlightStatus]="task.status">
         <div class="flex justify-between items-center">
-          <p class="font-semibold" [ngClass]="task.priority | priorityColor">
+          <p class="font-semibold flex-1" [ngClass]="task.priority | priorityColor">
             {{ task.title }}
           </p>
-          <span class="text-xs px-2 py-1 rounded-full bg-white/70 border">{{ task.priority }}</span>
+          <span class="text-xs px-2 py-1 rounded-full bg-white/70 border mr-2">
+            {{ task.priority }}
+          </span>
+          <div class="flex gap-1 items-center">
+            <button
+              class="bg-blue-500 text-white text-xs w-16 h-6 rounded-full flex items-center justify-center hover:bg-blue-600"
+              (click)="changerStatut(task)">
+              <lucide-icon name="RefreshCw" class="w-4 h-4"></lucide-icon>
+            </button>
+            <button
+              class="text-red-500 hover:text-red-700 text-xs w-6 h-6 rounded-full flex items-center justify-center border border-red-300"
+              (click)="supprimer(i)">
+              ✕
+            </button>
+          </div>
         </div>
       </div>
       }
@@ -30,19 +42,34 @@
   <!--  En cours -->
   <div class="flex-1 bg-blue-50 rounded-xl shadow-md p-5">
     <h3 class="text-lg font-bold text-blue-700 mb-4 flex items-center gap-2">
-      <lucide-icon name="rocket" class="w-5 h-5"></lucide-icon>
+      <lucide-icon [name]="'En cours' | statusEmoji" class="w-5 h-5"></lucide-icon>
       En cours
     </h3>
     <div class="space-y-3">
-      @for (task of tasks; track task.title) {
+      @for (task of tasks; track task.title; let i = $index) {
       @if (task.status === 'En cours') {
       <div class="p-3 rounded-lg shadow-sm border-l-4 transition-transform hover:scale-[1.02]"
-        appHighlightStatus="{{task.status}}">
+        [appHighlightStatus]="task.status">
         <div class="flex justify-between items-center">
           <p class="font-semibold" [ngClass]="task.priority | priorityColor">
             {{ task.title }}
           </p>
-          <span class="text-xs px-2 py-1 rounded-full bg-white/70 border">{{ task.priority }}</span>
+          <span class="text-xs px-2 py-1 rounded-full bg-white/70 border mr-2">
+            {{ task.priority }}
+          </span>
+          <div class="flex gap-1 items-center">
+            <button
+              class="bg-blue-500 text-white text-xs w-16 h-6 rounded-full flex items-center justify-center hover:bg-blue-600"
+              (click)="changerStatut(task)">
+              <lucide-icon name="RefreshCw" class="w-4 h-4"></lucide-icon>
+
+            </button>
+            <button
+              class="text-red-500 hover:text-red-700 text-xs w-6 h-6 rounded-full flex items-center justify-center border border-red-300"
+              (click)="supprimer(i)">
+              ✕
+            </button>
+          </div>
         </div>
       </div>
       }
@@ -53,19 +80,34 @@
   <!--  Terminé -->
   <div class="flex-1 bg-green-50 rounded-xl shadow-md p-5">
     <h3 class="text-lg font-bold text-green-700 mb-4 flex items-center gap-2">
-      <lucide-icon name="check" class="w-5 h-5"></lucide-icon>
+      <lucide-icon [name]="'Terminé' | statusEmoji" class="w-5 h-5"></lucide-icon>
       Terminé
     </h3>
     <div class="space-y-3">
-      @for (task of tasks; track task.title) {
+      @for (task of tasks; track task.title; let i = $index) {
       @if (task.status === 'Terminé') {
       <div class="p-3 rounded-lg shadow-sm border-l-4 transition-transform hover:scale-[1.02]"
-        appHighlightStatus="{{task.status}}">
+        [appHighlightStatus]="task.status">
         <div class="flex justify-between items-center">
           <p class="font-semibold" [ngClass]="task.priority | priorityColor">
             {{ task.title }}
           </p>
-          <span class="text-xs px-2 py-1 rounded-full bg-white/70 border">{{ task.priority }}</span>
+          <span class="text-xs px-2 py-1 rounded-full bg-white/70 border mr-2">
+            {{ task.priority }}
+          </span>
+          <div class="flex gap-1 items-center">
+            <button
+              class="bg-blue-500 text-white text-xs w-16 h-6 rounded-full flex items-center justify-center hover:bg-blue-600"
+              (click)="changerStatut(task)">
+              <lucide-icon name="RefreshCw" class="w-4 h-4"></lucide-icon>
+
+            </button>
+            <button
+              class="text-red-500 hover:text-red-700 text-xs w-6 h-6 rounded-full flex items-center justify-center border border-red-300"
+              (click)="supprimer(i)">
+              ✕
+            </button>
+          </div>
         </div>
       </div>
       }
@@ -73,5 +115,4 @@
     </div>
   </div>
   }
-
 </div>

@@ -1,53 +1,45 @@
 <app-project-filter (searchChanged)="onSearch($event)"></app-project-filter>
-
-<div class="space-y-6 mt-6">
+<div class="space-y-6 mt-6 bg-gray-50 dark:bg-gray900  min-h-screen p-4 transition-colors duration-300">
   <!-- Message si aucun projet trouvé -->
   @if (filteredProjects.length === 0) {
-    <p class="text-center text-gray-500 text-lg">Aucun projet trouvé</p>
-  } @else {
-    <!-- Boucle sur les projets filtrés -->
-    @for (project of filteredProjects; track project.name) {
-      <div class="bg-white shadow-md rounded-xl p-6 border border-gray-200 hover:shadow-lg transition">
-        <div class="flex justify-between items-center mb-4">
-          <div>
-          <div>
-            <h2 class="text-2xl font-bold text-gray-800">{{ project.name }}</h2>
-            <p class="text-gray-600">{{ project.description }}</p>
-          </div>
-
-          <span
-            class="px-3 py-1 rounded-full text-sm font-medium"
-            [ngClass]="{
-              'bg-blue-100 text-blue-700': project.status === 'En cours',
-              'bg-green-100 text-green-700': project.status === 'Terminé',
-              'bg-yellow-100 text-yellow-700': project.status === 'En attente'
-            }"
-          >
-            {{ project.status }}
-          </span>
-          </div>
-        <!-- Bouton Voir détails -->
-        <div class="flex justify-end">
-          <button
-            (click)="toggleProjectDetails(project)"
-            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-          >
-            {{ selectedProject === project ? 'Fermer' : 'Voir détails' }}
-          </button>
+  <p class="text-center text-gray-500 dark:text-gray-400 text-lg">
+    Aucun projet trouvé
+  </p> } @else {
+  <!-- Boucle sur les projets filtrés -->
+  @for (project of filteredProjects; track project.name) {
+  <div
+    class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            {{ project.name }}
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300">
+            Date de création : {{ project.createdAt | friendlyDate }}
+          </p>
+          <p class="text-gray-600 dark:text-gray-300">{{ project.description }}</p>
         </div>
 
-        <!-- Détails du projet (affichés uniquement si sélectionné) -->
+        <app-status-badge [status]="project.status"></app-status-badge>
 
-        </div>
-           @if (selectedProject === project) {
-          <div
-            class="mt-6 bg-gray-50 p-5 rounded-xl border border-gray-300 animate-fadeIn"
-          >
-            <app-project-detail [project]="project"></app-project-detail>
-          </div>
-        }
       </div>
-   
+
+      <div class="flex justify-end">
+        <button (click)="toggleProjectDetails(project)"
+          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg transition">
+          {{ selectedProject === project ? 'Fermer' : 'Voir détails' }}
+        </button>
+      </div>
+    </div>
+
+    @if (selectedProject === project) {
+    <div
+      class="mt-6 bg-gray-100 dark:bg-gray-700 p-5 rounded-xl border border-gray-300 dark:border-gray-600 animate-fadeIn">
+      <app-project-detail [project]="project"></app-project-detail>
+    </div>
     }
+  </div>
+  }
   }
 </div>

@@ -5,73 +5,82 @@ import { Project } from '../../../model/project.model';
 import { FormsModule } from '@angular/forms';
 import { ProjectFilter } from '../project-filter/project-filter';
 import { ProjectDetail } from '../project-detail/project-detail';
+import { StatusBadge } from '../../../stylecomponents/status-badge/status-badge';
+import { FriendlyDatePipe } from '../../../../pipes/friendly-date-pipe';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [TaskList,NgClass,FormsModule,ProjectFilter,ProjectDetail],
+  imports: [TaskList, NgClass, FormsModule, ProjectFilter, ProjectDetail, StatusBadge, FriendlyDatePipe],
   templateUrl: './project-list.html',
   styleUrl: './project-list.css'
 })
 export class ProjectList {
   searchTerm = '';
-  selectedProject: Project | null = null; 
+  selectedProject: Project | null = null;
 
-   projects: Project[] = [
-  {
-    name: 'Projet PFE',
-    description: 'Projet de fin d’études sur la BI et l’analyse des données de pêche',
-    status: 'En cours',
-    tasks: [
-      { title: 'Chercher un sujet de PFE', priority: 'Haute', status: 'En cours' },
-      { title: 'Contacter un encadrant', priority: 'Moyenne', status: 'En cours' },
-      { title: 'Rédiger le rapport technique', priority: 'Haute', status: 'En attente' },
-      { title: 'Préparer la soutenance', priority: 'Haute', status: 'En attente' }
-    ]
-  },
-  {
-    name: 'Développement Angular',
-    description: 'Mini-projet Angular standalone pour la gestion de tâches',
-    status: 'En cours',
-    tasks: [
-      { title: 'Créer les composants (ProjectList, TaskList)', priority: 'Haute', status: 'Terminé' },
-      { title: 'Configurer TailwindCSS', priority: 'Moyenne', status: 'En cours' },
-      { title: 'Améliorer le design façon Jira', priority: 'Basse', status: 'En attente' },
-      { title: 'Tester les interactions entre composants', priority: 'Haute', status: 'En attente' }
-    ]
-  },
-  {
-    name: 'Vie personnelle',
-    description: 'Organisation des tâches quotidiennes et personnelles',
-    status: 'En cours',
-    tasks: [
-      { title: 'Préparer un bon CV', priority: 'Haute', status: 'Terminé' },
-      { title: 'Chercher un stage ou emploi', priority: 'Haute', status: 'En cours' },
-      { title: 'Faire des courses', priority: 'Moyenne', status: 'En attente' },
-      { title: 'Préparer un gâteau pour l’anniversaire', priority: 'Basse', status: 'Terminé' }
-    ]
-  },
-  {
-    name: 'Projet personnel : ToDo App .NET',
-    description: 'Application de gestion de tâches avec IA et commande vocale',
-    status: 'Terminé',
-    tasks: [
-      { title: 'Implémenter le pattern Observer', priority: 'Haute', status: 'Terminé' },
-      { title: 'Ajouter la reconnaissance vocale', priority: 'Moyenne', status: 'Terminé' },
-      { title: 'Tester la catégorisation automatique', priority: 'Basse', status: 'Terminé' }
-    ]
-  },
-  {
+  projects: Project[] = [
+    {
+      name: 'Projet PFE',
+      description: 'Projet de fin d’études sur la BI et l’analyse des données de pêche',
+      status: 'En cours',
+      tasks: [
+        { title: 'Chercher un sujet de PFE', priority: 'Haute', status: 'En cours' },
+        { title: 'Contacter un encadrant', priority: 'Moyenne', status: 'En cours' },
+        { title: 'Rédiger le rapport technique', priority: 'Haute', status: 'En attente' },
+        { title: 'Préparer la soutenance', priority: 'Haute', status: 'En attente' }
+      ],
+      createdAt: new Date('2023-01-15')
+    },
+    {
+      name: 'Développement Angular',
+      description: 'Mini-projet Angular standalone pour la gestion de tâches',
+      status: 'En cours',
+      tasks: [
+        { title: 'Créer les composants (ProjectList, TaskList)', priority: 'Haute', status: 'Terminé' },
+        { title: 'Configurer TailwindCSS', priority: 'Moyenne', status: 'En cours' },
+        { title: 'Améliorer le design façon Jira', priority: 'Basse', status: 'En attente' },
+        { title: 'Tester les interactions entre composants', priority: 'Haute', status: 'En attente' }
+      ],
+      createdAt: new Date('2025-10-30')
+    },
+    {
+      name: 'Vie personnelle',
+      description: 'Organisation des tâches quotidiennes et personnelles',
+      status: 'En cours',
+      tasks: [
+        { title: 'Préparer un bon CV', priority: 'Haute', status: 'Terminé' },
+        { title: 'Chercher un stage ou emploi', priority: 'Haute', status: 'En cours' },
+        { title: 'Faire des courses', priority: 'Moyenne', status: 'En attente' },
+        { title: 'Préparer un gâteau pour l’anniversaire', priority: 'Basse', status: 'Terminé' }
+      ],
+      createdAt: new Date('2025-10-28')
 
-    name: 'Développement spring',
-    description: 'Mini-projet Angular standalone pour la gestion de tâches',
-    status: 'En cours',
-    tasks: []
-  }
-];
+    },
+    {
+      name: 'Projet personnel : ToDo App .NET',
+      description: 'Application de gestion de tâches avec IA et commande vocale',
+      status: 'Terminé',
+      tasks: [
+        { title: 'Implémenter le pattern Observer', priority: 'Haute', status: 'Terminé' },
+        { title: 'Ajouter la reconnaissance vocale', priority: 'Moyenne', status: 'Terminé' },
+        { title: 'Tester la catégorisation automatique', priority: 'Basse', status: 'Terminé' }
+      ],
+      createdAt: new Date('2024-05-20')
+    },
+    {
 
-  
- onSearch(term: string) {
+      name: 'Développement spring',
+      description: 'Mini-projet Angular standalone pour la gestion de tâches',
+      status: 'En cours',
+      tasks: [],
+      createdAt: new Date('2025-10-30')
+
+    }
+  ];
+
+
+  onSearch(term: string) {
     this.searchTerm = term.toLowerCase();
   }
 
@@ -97,7 +106,7 @@ export class ProjectList {
   selectProject(project: Project) {
     this.selectedProject = project;
   }
-    toggleProjectDetails(project: Project) {
+  toggleProjectDetails(project: Project) {
     this.selectedProject = this.selectedProject === project ? null : project;
   }
 }

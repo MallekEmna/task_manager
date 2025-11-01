@@ -10,4 +10,5 @@ export interface Project {
   description: string;
   status: 'En attente' | 'En cours' | 'Terminé';
   tasks: Task[];
+  createdAt: Date;
 }

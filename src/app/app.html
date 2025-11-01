@@ -1,3 +1,7 @@
-<div class="p-4">
-<app-project-list></app-project-list>
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+    <app-navbar></app-navbar> <!-- toujours visible -->
+
+    <main class="p-6">
+        <router-outlet></router-outlet> <!-- contenu dynamique -->
+    </main>
 </div>
