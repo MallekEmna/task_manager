@@ -19,8 +19,23 @@
       ✖
     </button>
 
-    <!-- 🔥 Le composant enfant AddProject -->
+    <!-- Le composant enfant AddProject -->
     <app-add-project (projectAdded)="onProjectAdded($event)"></app-add-project>
+  </div>
+</div>
+
+<!-- Fenêtre modale Edit Project -->
+<div *ngIf="editingProject"
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl w-full max-w-lg relative animate-fadeIn">
+    <button (click)="editingProject = null" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl">
+      ✖
+    </button>
+
+    <!-- Composant enfant EditProject -->
+    <app-edit-project [project]="editingProject" (projectUpdated)="onProjectUpdated($event)"
+      (cancelEdit)="editingProject = null">
+    </app-edit-project>
   </div>
 </div>
 
@@ -44,11 +59,18 @@
 
         <app-status-badge [status]="project.status"></app-status-badge>
       </div>
+      <div class="flex justify-end gap-2">
 
-      <button (click)="toggleProjectDetails(project)"
-        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg transition">
-        {{ selectedProject === project ? 'Fermer' : 'Voir détails' }}
-      </button>
+        <button (click)="toggleProjectDetails(project)"
+          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg transition">
+          {{ selectedProject === project ? 'Fermer' : 'Voir détails' }}
+        </button>
+
+        <button (click)="editingProject = project"
+          class="px-4 py-2 bg-green-500 hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600 text-white rounded-lg transition">
+          Modifier
+        </button>
+      </div>
     </div>
 
     @if (selectedProject === project) {
@@ -60,4 +82,6 @@
   </div>
   }
   }
+
+
 </div>

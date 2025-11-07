@@ -8,6 +8,7 @@ import { ProjectDetail } from '../project-detail/project-detail';
 import { StatusBadge } from '../../../stylecomponents/status-badge/status-badge';
 import { FriendlyDatePipe } from '../../../../pipes/friendly-date-pipe';
 import { AddProject } from '../add-project/add-project';
+import { EditProject } from '../edit-project/edit-project';
 
 @Component({
   selector: 'app-project-list',
@@ -20,7 +21,8 @@ import { AddProject } from '../add-project/add-project';
     ProjectDetail,
     StatusBadge,
     FriendlyDatePipe,
-    AddProject
+    AddProject,
+    EditProject
   ],
   templateUrl: './project-list.html',
   styleUrl: './project-list.css'
@@ -28,7 +30,8 @@ import { AddProject } from '../add-project/add-project';
 export class ProjectList {
   searchTerm = '';
   selectedProject: Project | null = null;
-  showAddModal = false; // ✅ pour afficher/masquer la modale
+  editingProject: Project | null = null;
+  showAddModal = false; //  pour afficher/masquer la modale
 
   projects: Project[] = [
     {
@@ -103,4 +106,15 @@ export class ProjectList {
     this.showAddModal = false; // ferme la fenêtre
     this.searchTerm = ''; // réinitialise le filtre
   }
+  onProjectUpdated(updatedProject: Project) {
+    // Remplacer l'ancien projet par le projet modifié
+    const index = this.projects.findIndex(p => p.createdAt.getTime() === updatedProject.createdAt.getTime());
+    if (index > -1) {
+      this.projects[index] = { ...updatedProject };
+    }
+
+    // Fermer le formulaire
+    this.editingProject = null;
+  }
+
 }

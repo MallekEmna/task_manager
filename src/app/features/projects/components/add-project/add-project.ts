@@ -33,7 +33,7 @@ export class AddProject {
       this.message = `Le projet "${this.project.name}" a été créé avec succès !`;
 
       // Réinitialiser le formulaire et l'objet projet
-      form.resetForm(); // méthode recommandée pour NgForm
+      form.resetForm();
       this.project = {
         name: '',
         description: '',

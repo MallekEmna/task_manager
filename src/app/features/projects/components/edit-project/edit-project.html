@@ -1,1 +1,58 @@
-<p>edit-project works!</p>
+<div class="max-w-xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-2xl">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">Modifier le projet</h2>
+
+    <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" class="space-y-4">
+
+        <!-- Nom du projet -->
+        <div>
+            <label class="block text-gray-700 dark:text-gray-200 font-medium">Nom du projet</label>
+            <input type="text" name="name" [(ngModel)]="project.name" required minlength="4"
+                class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                #name="ngModel">
+            <p class="text-red-500 text-sm mt-1" *ngIf="name.invalid && name.touched">
+                <span *ngIf="name.errors?.['required']">Le nom est obligatoire.</span>
+                <span *ngIf="name.errors?.['minlength']">Minimum 4 caractères.</span>
+            </p>
+        </div>
+
+        <!-- Description -->
+        <div>
+            <label class="block text-gray-700 dark:text-gray-200 font-medium">Description</label>
+            <textarea name="description" [(ngModel)]="project.description" required
+                class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                #description="ngModel"></textarea>
+            <p class="text-red-500 text-sm mt-1" *ngIf="description.invalid && description.touched">
+                La description est obligatoire.
+            </p>
+        </div>
+
+        <!-- Statut -->
+        <div>
+            <label class="block text-gray-700 dark:text-gray-200 font-medium">Statut</label>
+            <select name="status" [(ngModel)]="project.status" required
+                class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                #status="ngModel">
+                <option value="">-- Sélectionner un statut --</option>
+                <option>En cours</option>
+                <option>Terminé</option>
+                <option>En attente</option>
+            </select>
+            <p class="text-red-500 text-sm mt-1" *ngIf="status.invalid && status.touched">
+                Le statut est obligatoire.
+            </p>
+        </div>
+
+        <!-- Boutons -->
+        <div class="flex justify-between mt-6">
+            <button type="submit" [disabled]="editForm.invalid"
+                class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg disabled:opacity-50">
+                Enregistrer
+            </button>
+
+            <button type="button" (click)="onCancel()"
+                class="px-4 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg">
+                Annuler
+            </button>
+        </div>
+    </form>
+</div>
