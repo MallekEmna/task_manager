@@ -1,36 +1,54 @@
-<app-project-filter (searchChanged)="onSearch($event)"></app-project-filter>
-<div class="space-y-6 mt-6 bg-gray-50 dark:bg-gray900  min-h-screen p-4 transition-colors duration-300">
-  <!-- Message si aucun projet trouvé -->
+<!-- Ligne avec bouton + barre de recherche -->
+<div class="flex flex-col md:flex-row items-center justify-between mb-4 gap-4">
+
+  <!-- Barre de recherche -->
+  <app-project-filter (searchChanged)="onSearch($event)" class="flex-1"></app-project-filter>
+
+  <!-- Bouton Ajouter un projet -->
+  <button (click)="showAddModal = true"
+    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md transition">
+    + Ajouter un projet
+  </button>
+
+</div>
+<!-- Fenêtre modale avec flou -->
+<div *ngIf="showAddModal"
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl w-full max-w-lg relative animate-fadeIn">
+    <button (click)="showAddModal = false" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl">
+      ✖
+    </button>
+
+    <!-- 🔥 Le composant enfant AddProject -->
+    <app-add-project (projectAdded)="onProjectAdded($event)"></app-add-project>
+  </div>
+</div>
+
+
+<!-- Liste des projets -->
+<div class="space-y-6 mt-6 bg-gray-50 dark:bg-gray900 min-h-screen p-4 transition-colors duration-300">
+
   @if (filteredProjects.length === 0) {
-  <p class="text-center text-gray-500 dark:text-gray-400 text-lg">
-    Aucun projet trouvé
-  </p> } @else {
-  <!-- Boucle sur les projets filtrés -->
+  <p class="text-center text-gray-500 dark:text-gray-400 text-lg">Aucun projet trouvé</p>
+  } @else {
   @for (project of filteredProjects; track project.name) {
   <div
     class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
     <div class="flex justify-between items-center mb-4">
       <div>
-        <div>
-          <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
-            {{ project.name }}
-          </h2>
-          <p class="text-gray-600 dark:text-gray-300">
-            Date de création : {{ project.createdAt | friendlyDate }}
-          </p>
-          <p class="text-gray-600 dark:text-gray-300">{{ project.description }}</p>
-        </div>
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ project.name }}</h2>
+        <p class="text-gray-600 dark:text-gray-300">
+          Date de création : {{ project.createdAt | friendlyDate }}
+        </p>
+        <p class="text-gray-600 dark:text-gray-300">{{ project.description }}</p>
 
         <app-status-badge [status]="project.status"></app-status-badge>
-
       </div>
 
-      <div class="flex justify-end">
-        <button (click)="toggleProjectDetails(project)"
-          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg transition">
-          {{ selectedProject === project ? 'Fermer' : 'Voir détails' }}
-        </button>
-      </div>
+      <button (click)="toggleProjectDetails(project)"
+        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg transition">
+        {{ selectedProject === project ? 'Fermer' : 'Voir détails' }}
+      </button>
     </div>
 
     @if (selectedProject === project) {

@@ -1,23 +1,34 @@
 import { Component } from '@angular/core';
 import { TaskList } from '../task-list/task-list';
-import { NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Project } from '../../../model/project.model';
 import { FormsModule } from '@angular/forms';
 import { ProjectFilter } from '../project-filter/project-filter';
 import { ProjectDetail } from '../project-detail/project-detail';
 import { StatusBadge } from '../../../stylecomponents/status-badge/status-badge';
 import { FriendlyDatePipe } from '../../../../pipes/friendly-date-pipe';
+import { AddProject } from '../add-project/add-project';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [TaskList, NgClass, FormsModule, ProjectFilter, ProjectDetail, StatusBadge, FriendlyDatePipe],
+  imports: [
+    TaskList,
+    CommonModule,
+    FormsModule,
+    ProjectFilter,
+    ProjectDetail,
+    StatusBadge,
+    FriendlyDatePipe,
+    AddProject
+  ],
   templateUrl: './project-list.html',
   styleUrl: './project-list.css'
 })
 export class ProjectList {
   searchTerm = '';
   selectedProject: Project | null = null;
+  showAddModal = false; // ✅ pour afficher/masquer la modale
 
   projects: Project[] = [
     {
@@ -55,30 +66,8 @@ export class ProjectList {
         { title: 'Préparer un gâteau pour l’anniversaire', priority: 'Basse', status: 'Terminé' }
       ],
       createdAt: new Date('2025-10-28')
-
-    },
-    {
-      name: 'Projet personnel : ToDo App .NET',
-      description: 'Application de gestion de tâches avec IA et commande vocale',
-      status: 'Terminé',
-      tasks: [
-        { title: 'Implémenter le pattern Observer', priority: 'Haute', status: 'Terminé' },
-        { title: 'Ajouter la reconnaissance vocale', priority: 'Moyenne', status: 'Terminé' },
-        { title: 'Tester la catégorisation automatique', priority: 'Basse', status: 'Terminé' }
-      ],
-      createdAt: new Date('2024-05-20')
-    },
-    {
-
-      name: 'Développement spring',
-      description: 'Mini-projet Angular standalone pour la gestion de tâches',
-      status: 'En cours',
-      tasks: [],
-      createdAt: new Date('2025-10-30')
-
     }
   ];
-
 
   onSearch(term: string) {
     this.searchTerm = term.toLowerCase();
@@ -103,10 +92,15 @@ export class ProjectList {
       return inProject || inTasks;
     });
   }
-  selectProject(project: Project) {
-    this.selectedProject = project;
-  }
+
   toggleProjectDetails(project: Project) {
     this.selectedProject = this.selectedProject === project ? null : project;
+  }
+
+  //  Quand un projet est ajouté depuis le modal
+  onProjectAdded(newProject: Project) {
+    this.projects.unshift(newProject); // ajoute en haut de la liste
+    this.showAddModal = false; // ferme la fenêtre
+    this.searchTerm = ''; // réinitialise le filtre
   }
 }

@@ -5,7 +5,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { Navbar } from './features/projects/components/navbar/navbar';
 @Component({
   selector: 'app-root',
-  imports: [ProjectList, LucideAngularModule, Navbar, RouterOutlet],
+  imports: [LucideAngularModule, Navbar, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
